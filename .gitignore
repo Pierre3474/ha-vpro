@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Secrets et valeurs réelles — seuls les .example sont versionnés
+.env
+.env.*
+!.env.example
+*.env
+!*.env.example
+*.key
+*.pem
+*.log

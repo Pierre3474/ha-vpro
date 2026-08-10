@@ -1,0 +1,25 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Intel vPro / AMT",
+        "description": "Connexion au firmware AMT de la machine (Digest, port 16993 TLS par défaut).",
+        "data": {
+          "host": "Hôte (IP)",
+          "name": "Nom (optionnel)",
+          "username": "Utilisateur AMT",
+          "password": "Mot de passe AMT",
+          "port": "Port",
+          "use_tls": "TLS"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Connexion impossible",
+      "invalid_auth": "Authentification refusée"
+    },
+    "abort": {
+      "already_configured": "Cet hôte est déjà configuré"
+    }
+  }
+}

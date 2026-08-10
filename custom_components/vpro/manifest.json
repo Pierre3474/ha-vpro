@@ -1,0 +1,12 @@
+{
+  "domain": "vpro",
+  "name": "Intel vPro / AMT",
+  "version": "0.1.0",
+  "documentation": "https://github.com/Pierre3474/ha-vpro",
+  "issue_tracker": "https://github.com/Pierre3474/ha-vpro/issues",
+  "dependencies": [],
+  "codeowners": ["@Pierre3474"],
+  "requirements": ["requests>=2.31.0"],
+  "config_flow": true,
+  "iot_class": "local_polling"
+}
