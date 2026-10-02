@@ -48,9 +48,9 @@ Testé contre le vrai AMT de MS-01.
   l'hôte et intercepte 16992-16995 ; le `192.0.2.61` de MeshCommander était une entrée
   stale. TLS 16993 = SSLError (stack TLS AMT trop vieille pour openssl moderne) → utiliser
   **plain 16992** (réseau de gestion). Defaults du config_flow = 16992 / TLS off.
-- ✅ **Lecture validée** : `get_power_state` = 2 (on), `get_versions` = AMT **16.1.25**
+- **Lecture validée** : `get_power_state` = 2 (on), `get_versions` = AMT **16.1.25**
   (+ Flash/Netstack/Sku/Build). Les sensors/binary_sensor marchent.
-- ⛔ **Power control bloqué côté AMT** : `RequestPowerStateChange` → SOAP fault
+- **Power control bloqué côté AMT** : `RequestPowerStateChange` → SOAP fault
   **`e:AccessDenied`** ("sender was not authorized"). Selectors vérifiés corrects
   (identiques aux clés énumérées) → **le compte `admin` n'a pas le realm "Remote Control"
   / Power**, ou Remote Control est désactivé dans la conf AMT (ou mode CCM vs ACM).
