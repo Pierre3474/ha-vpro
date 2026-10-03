@@ -63,3 +63,7 @@ Testé contre le vrai AMT de MS-01.
 - Home Assistant : `192.0.2.50:8123`
 - AMT MS-01 : `192.0.2.20:16992` (plain), user `admin`
 - AMT NAS : `192.0.2.10` (à activer)
+
+## Licence
+
+MIT, voir [LICENSE](LICENSE).
