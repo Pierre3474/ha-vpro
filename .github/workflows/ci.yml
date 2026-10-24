@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  garde-fou:
+    name: Secrets et mentions interdites
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Recherche de secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Mentions interdites (fichiers et messages de commit)
+        run: |
+          # motif encodé pour ne pas apparaître en clair dans le dépôt
+          motif=$(echo 'Y2xhdWRlfGFudGhyb3BpYw==' | base64 -d)
+          echec=0
+          if git grep -n -i -E "$motif" -- . ':!.github/workflows/ci.yml'; then
+            echo "::error::Mention interdite dans les fichiers"
+            echec=1
+          fi
+          if git ls-files | grep -i -E "$motif"; then
+            echo "::error::Mention interdite dans un nom de fichier"
+            echec=1
+          fi
+          if git log --format='%an %ae %cn %ce%n%B' | grep -i -E "$motif"; then
+            echo "::error::Mention interdite dans l'historique des commits"
+            echec=1
+          fi
+          exit $echec
+
+  lint:
+    name: Lint Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install ruff
+      - name: ruff check
+        run: ruff check --isolated --select E9,F custom_components/
+      - name: Compilation
+        run: python -m compileall -q custom_components/
+
+  hassfest:
+    name: Validation Home Assistant (hassfest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: home-assistant/actions/hassfest@master
+
+  hacs:
+    name: Validation HACS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hacs/action@main
+        with:
+          category: integration
+          ignore: brands
